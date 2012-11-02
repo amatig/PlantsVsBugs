@@ -148,9 +148,9 @@ public class GameData {
 		
 		this.mHelm1 = AdResourceLoader.getTexture(64, 128, "helm1");
 		
-		this.mMySeed = new AdTextScoring(48, 67, GameData.getInstance().mFontSeed, HorizontalAlign.CENTER, 60);
+		this.mMySeed = new AdTextScoring(48, 67, GameData.getInstance().mFontSeed, HorizontalAlign.CENTER, 4);
 		this.mMyScore = new AdTextScoring(703, 30, GameData.getInstance().mFontScore, HorizontalAlign.RIGHT, 0, "Pt.");
-		this.mMyLevel = new AdTextScoring(703, 70, GameData.getInstance().mFontScore, HorizontalAlign.RIGHT, 20, "Lv.");
+		this.mMyLevel = new AdTextScoring(703, 70, GameData.getInstance().mFontScore, HorizontalAlign.RIGHT, 0, "Lv.");
 		
 		//this.mBugLeg = AdResourceLoader.getTexture(64, 64, "leg", 1, 2);
 		
