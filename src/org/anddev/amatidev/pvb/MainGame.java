@@ -138,7 +138,7 @@ public class MainGame extends AdScene {
 		int start_x = 106;
 		for (int i = 0; i < cards.size(); i++) {
 			Card c = cards.get(i);
-			c.setPosition(start_x + i * 69, 7);
+			c.setPosition(start_x + i * 69, 8);
 			getChild(BACKGROUND_LAYER).attachChild(c);
 		}
 		

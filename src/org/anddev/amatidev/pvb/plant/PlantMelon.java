@@ -29,8 +29,8 @@ public class PlantMelon extends Plant {
 		final Sprite plant = new Sprite(getParent().getX() + 2, getParent().getY() - 300, GameData.getInstance().mPlantMelon);
 		AdEnviroment.getInstance().getScene().getChild(MainGame.PRESHOT_GAME_LAYER).attachChild(plant);
 		
-		Path path = new Path(2).to(getParent().getX() + 2, getParent().getY() - 300).to(getParent().getX() + 2,  getParent().getY() - 13);
-		plant.registerEntityModifier(new PathModifier(1.5f, path, new IEntityModifierListener() {
+		Path path = new Path(2).to(getParent().getX() + 2, getParent().getY() - 300).to(getParent().getX() + 2,  getParent().getY() + 3);
+		plant.registerEntityModifier(new PathModifier(1f, path, new IEntityModifierListener() {
 			@Override
 			public void onModifierFinished(IModifier<IEntity> pModifier, IEntity pItem) {
 				AdEnviroment.getInstance().getEngine().runOnUpdateThread(new Runnable() {

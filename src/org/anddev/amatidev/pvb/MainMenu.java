@@ -56,23 +56,23 @@ public class MainMenu extends AdScene {
 		
     	Text play = new Text(0, 0, GameData.getInstance().mFontMainMenu, "PLAY");
     	//play.setColor(1.0f, 1.0f, 0.6f);
-    	play.setPosition(x - play.getWidthScaled() / 2, this.mIndex);
+    	play.setPosition(x - play.getWidthScaled() / 2, this.mIndex + 50);
     	
     	Text cont = new Text(0, 0, GameData.getInstance().mFontMainMenu, "CONTINUE");
     	//more.setColor(1.0f, 1.0f, 0.6f);
-    	cont.setPosition(x - cont.getWidthScaled() / 2, this.mIndex + 90);
+    	cont.setPosition(x - cont.getWidthScaled() / 2, this.mIndex + 126);
     	
     	Text score = new Text(0, 0, GameData.getInstance().mFontMainMenu, "SCORE");
     	//score.setColor(1.0f, 1.0f, 0.6f);
-    	score.setPosition(60, this.mIndex + 180);
+    	score.setPosition(60, this.mIndex + 200);
     	
     	Text sep = new Text(0, 0, GameData.getInstance().mFontMainMenu, "/");
     	//score.setColor(1.0f, 1.0f, 0.6f);
-    	sep.setPosition(250, this.mIndex + 180);
+    	sep.setPosition(250, this.mIndex + 200);
     	
     	Text more = new Text(0, 0, GameData.getInstance().mFontMainMenu, "MORE GAME");
     	//score.setColor(1.0f, 1.0f, 0.6f);
-    	more.setPosition(300, this.mIndex + 180);
+    	more.setPosition(300, this.mIndex + 200);
     	
     	getChild(AdScene.GAME_LAYER).attachChild(play);
     	getChild(AdScene.GAME_LAYER).attachChild(cont);
@@ -128,13 +128,13 @@ public class MainMenu extends AdScene {
 	private void execute(ITouchArea pTouchArea) {
 		GameData.getInstance().mSoundMenu.play();
 		Text item = (Text) pTouchArea;
-		if ((int) item.getY() == this.mIndex) {
+		if ((int) item.getY() == this.mIndex + 50) {
 			this.mContinue = false;
 			AdEnviroment.getInstance().nextScene();
-		} else if ((int) item.getY() == this.mIndex + 90) {
+		} else if ((int) item.getY() == this.mIndex + 126) {
 			this.mContinue = true;
 			AdEnviroment.getInstance().nextScene();
-		} else if ((int) item.getY() == this.mIndex + 180) {
+		} else if ((int) item.getY() == this.mIndex + 200) {
 			if ((int) item.getX() > 100) {
 				try{
 					AdEnviroment.getInstance().getContext().startActivity(new Intent (Intent.ACTION_VIEW, Uri.parse("market://details?id=org.anddev.andengine.braingamelite")));

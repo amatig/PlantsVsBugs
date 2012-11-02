@@ -144,16 +144,15 @@ public class GameData {
 		this.mBugBeetle = AdResourceLoader.getTexture(64, 128, "beetle");
 		this.mBugLadybug = AdResourceLoader.getTexture(64, 128, "ladybug");
 		this.mBugCaterpillar = AdResourceLoader.getTexture(64, 128, "caterpillar");
-		this.mBugCaterpillar2 = AdResourceLoader.getTexture(64, 128, "caterpillar2");
 		this.mBugSnail = AdResourceLoader.getTexture(64, 128, "snail");
 		
 		this.mHelm1 = AdResourceLoader.getTexture(64, 128, "helm1");
 		
-		this.mMySeed = new AdTextScoring(48, 67, GameData.getInstance().mFontSeed, HorizontalAlign.CENTER, 6);
+		this.mMySeed = new AdTextScoring(48, 67, GameData.getInstance().mFontSeed, HorizontalAlign.CENTER, 60);
 		this.mMyScore = new AdTextScoring(703, 30, GameData.getInstance().mFontScore, HorizontalAlign.RIGHT, 0, "Pt.");
-		this.mMyLevel = new AdTextScoring(703, 70, GameData.getInstance().mFontScore, HorizontalAlign.RIGHT, 0, "Lv.");
+		this.mMyLevel = new AdTextScoring(703, 70, GameData.getInstance().mFontScore, HorizontalAlign.RIGHT, 20, "Lv.");
 		
-		this.mBugLeg = AdResourceLoader.getTexture(64, 64, "leg", 1, 2);
+		//this.mBugLeg = AdResourceLoader.getTexture(64, 64, "leg", 1, 2);
 		
 		this.mCards = new LinkedList<Card>();
 	}

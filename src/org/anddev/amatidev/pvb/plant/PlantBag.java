@@ -44,8 +44,8 @@ public class PlantBag extends Plant {
 		);
 		
 		// creazione shot
-		Sprite seed = new Sprite(getParent().getX() + 11, getParent().getY() + 5, GameData.getInstance().mSeed2);
-		Path path = new Path(2).to(getParent().getX() + 11, getParent().getY() + 5).to(getParent().getX() + 11, getParent().getY() - 40);
+		Sprite seed = new Sprite(getParent().getX() + 11, getParent().getY(), GameData.getInstance().mSeed2);
+		Path path = new Path(2).to(getParent().getX() + 11, getParent().getY()).to(getParent().getX() + 11, getParent().getY() - 40);
 		seed.registerEntityModifier(new PathModifier(1f, path, new IEntityModifierListener() {
 			@Override
 			public void onModifierFinished(IModifier<IEntity> pModifier, IEntity pItem) {

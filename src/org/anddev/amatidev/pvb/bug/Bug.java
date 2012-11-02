@@ -41,8 +41,8 @@ public abstract class Bug extends Entity {
 	}
 	
 	public void addHelm(final TextureRegion pHelm, final int pLife) {
-		Sprite helm = new Sprite(0, 0, pHelm);
-		getBody().attachChild(helm);
+		//Sprite helm = new Sprite(0, 0, pHelm);
+		//getBody().attachChild(helm);
 		
 		this.mLife += pLife;
 	}
