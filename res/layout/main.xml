@@ -11,13 +11,12 @@
         android:layout_centerInParent="true"
         android:gravity="center" />
 
-    <com.google.ads.AdView
-        android:id="@+id/adView"
-        android:layout_width="wrap_content"
+    <RelativeLayout
+        android:id="@+id/myAds"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_alignParentBottom="true"
-        ads:adSize="SMART_BANNER"
-        ads:adUnitId="@string/admobPublisherID"
-        ads:loadAdOnCreate="true" />
+        android:orientation="vertical" >
+    </RelativeLayout>
 
 </RelativeLayout>

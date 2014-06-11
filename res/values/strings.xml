@@ -1,3 +1,7 @@
 <resources>
+
     <string name="app_name">Plants vs Bugs</string>
+    <string name="ad_unit_id">ca-app-pub-9973224293913664/4298488469</string>
+    <string name="ad_unit_id_inter">ca-app-pub-9973224293913664/6088199665</string>
+
 </resources>
