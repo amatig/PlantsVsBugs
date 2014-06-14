@@ -37,30 +37,6 @@ public class PlantsVsBugs extends AdGameActivity {
 	protected void onCreate(final Bundle pSavedInstanceState) {
 		super.onCreate(pSavedInstanceState);
 
-		// Create the interstitial.
-		interstitial = new InterstitialAd(this);
-		interstitial.setAdUnitId(getResources().getString(
-				R.string.ad_unit_id_inter));
-
-		// Create ad request.
-		AdRequest adRequest = new AdRequest.Builder().build();
-
-		// Begin loading your interstitial.
-		interstitial.loadAd(adRequest);
-
-		interstitial.setAdListener(new AdListener() {
-			public void onAdLoaded() {
-				displayInterstitial();
-			}
-		});
-
-		// classic ads
-		mAdView = new AdView(this);
-		mAdView.setAdUnitId(getResources().getString(R.string.ad_unit_id));
-		mAdView.setAdSize(AdSize.SMART_BANNER);
-		RelativeLayout layout = (RelativeLayout) findViewById(R.id.myAds);
-		layout.addView(mAdView);
-		mAdView.loadAd(new AdRequest.Builder().build());
 	}
 
 	// Invoke displayInterstitial() when you are ready to display an
@@ -89,6 +65,31 @@ public class PlantsVsBugs extends AdGameActivity {
 		 * 
 		 * }
 		 */
+
+		// Create the interstitial.
+		interstitial = new InterstitialAd(this);
+		interstitial.setAdUnitId(getResources().getString(
+				R.string.ad_unit_id_inter));
+
+		// Create ad request.
+		AdRequest adRequest = new AdRequest.Builder().build();
+
+		// Begin loading your interstitial.
+		interstitial.loadAd(adRequest);
+
+		interstitial.setAdListener(new AdListener() {
+			public void onAdLoaded() {
+				displayInterstitial();
+			}
+		});
+
+		// classic ads
+		mAdView = new AdView(this);
+		mAdView.setAdUnitId(getResources().getString(R.string.ad_unit_id));
+		mAdView.setAdSize(AdSize.SMART_BANNER);
+		RelativeLayout layout = (RelativeLayout) findViewById(R.id.myAds);
+		layout.addView(mAdView);
+		mAdView.loadAd(new AdRequest.Builder().build());
 	}
 
 	@Override
