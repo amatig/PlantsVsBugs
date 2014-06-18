@@ -30,6 +30,8 @@ import org.anddev.andengine.input.touch.TouchEvent;
 import org.anddev.andengine.util.MathUtils;
 import org.anddev.andengine.util.SimplePreferences;
 
+import com.google.android.gms.games.Games;
+
 public class MainGame extends AdScene {
 
 	public static int PRESHOT_GAME_LAYER = 5;
@@ -213,6 +215,12 @@ public class MainGame extends AdScene {
 			this.mGameOver = true;
 
 			try {
+				Games.Leaderboards
+						.submitScore(((PlantsVsBugs) AdEnviroment.getInstance()
+								.getContext()).getApiClient(),
+								AdEnviroment.getInstance().getContext()
+										.getString(R.string.leaderboard_score),
+								GameData.getInstance().mMyScore.getScore());
 				/*
 				 * Score s = new
 				 * Score(GameData.getInstance().mMyScore.getScore());
@@ -236,6 +244,13 @@ public class MainGame extends AdScene {
 			}
 
 			try {
+				Games.Leaderboards
+						.submitScore(((PlantsVsBugs) AdEnviroment.getInstance()
+								.getContext()).getApiClient(),
+								AdEnviroment.getInstance().getContext()
+										.getString(R.string.leaderboard_level),
+								GameData.getInstance().mMyLevel.getScore());
+
 				/*
 				 * Score s = new
 				 * Score(GameData.getInstance().mMyLevel.getScore());

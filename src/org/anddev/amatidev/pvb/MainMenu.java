@@ -15,9 +15,16 @@ import org.anddev.andengine.entity.text.Text;
 import org.anddev.andengine.input.touch.TouchEvent;
 import org.anddev.andengine.util.modifier.IModifier;
 
+import android.app.Activity;
+import android.app.AlertDialog;
 import android.content.ActivityNotFoundException;
+import android.content.DialogInterface;
+import android.content.DialogInterface.OnClickListener;
 import android.content.Intent;
 import android.net.Uri;
+import android.widget.Toast;
+
+import com.google.android.gms.games.Games;
 
 public class MainMenu extends AdScene {
 
@@ -141,7 +148,65 @@ public class MainMenu extends AdScene {
 				}
 			} else {
 				try {
-					// Dashboard.open();
+					((Activity) AdEnviroment.getInstance().getContext())
+							.runOnUiThread(new Runnable() {
+								public void run() {
+									if (((PlantsVsBugs) AdEnviroment
+											.getInstance().getContext())
+											.getApiClient().isConnected()) {
+
+										AlertDialog.Builder adb = new AlertDialog.Builder(
+												AdEnviroment.getInstance()
+														.getContext());
+										CharSequence items[] = new CharSequence[] {
+												"Level", "Score" };
+										adb.setItems(items,
+												new OnClickListener() {
+													@Override
+													public void onClick(
+															DialogInterface d,
+															int n) {
+
+														int levelID = 0;
+
+														if (n == 0) {
+															levelID = R.string.leaderboard_level;
+														} else if (n == 1) {
+															levelID = R.string.leaderboard_score;
+														}
+
+														String levelString = AdEnviroment
+																.getInstance()
+																.getContext()
+																.getString(
+																		levelID);
+
+														((Activity) AdEnviroment
+																.getInstance()
+																.getContext())
+																.startActivityForResult(
+																		Games.Leaderboards
+																				.getLeaderboardIntent(
+																						((PlantsVsBugs) AdEnviroment
+																								.getInstance()
+																								.getContext())
+																								.getApiClient(),
+																						levelString),
+																		1);
+													}
+												});
+										adb.setNegativeButton("Cancel", null);
+										adb.setTitle("Which leaderboard?");
+										adb.show();
+									} else {
+										Toast.makeText(
+												AdEnviroment.getInstance()
+														.getContext(),
+												"Game services not connected.",
+												Toast.LENGTH_LONG).show();
+									}
+								}
+							});
 				} catch (Exception e) {
 				}
 			}

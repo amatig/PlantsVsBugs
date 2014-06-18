@@ -10,7 +10,9 @@ import org.anddev.andengine.engine.options.EngineOptions.ScreenOrientation;
 import org.anddev.andengine.entity.scene.Scene;
 import org.anddev.andengine.entity.scene.SplashScene;
 
+import android.content.IntentSender.SendIntentException;
 import android.os.Bundle;
+import android.util.Log;
 import android.widget.RelativeLayout;
 
 import com.google.android.gms.ads.AdListener;
@@ -18,10 +20,86 @@ import com.google.android.gms.ads.AdRequest;
 import com.google.android.gms.ads.AdSize;
 import com.google.android.gms.ads.AdView;
 import com.google.android.gms.ads.InterstitialAd;
+import com.google.android.gms.common.ConnectionResult;
+import com.google.android.gms.common.api.GoogleApiClient;
+import com.google.android.gms.games.Games;
 
-public class PlantsVsBugs extends AdGameActivity {
+public class PlantsVsBugs extends AdGameActivity implements
+		GoogleApiClient.ConnectionCallbacks,
+		GoogleApiClient.OnConnectionFailedListener {
 	private AdView mAdView;
 	private InterstitialAd interstitial;
+
+	// Request code to use when launching the resolution activity
+	private static final int REQUEST_RESOLVE_ERROR = 1001;
+	// Bool to track whether the app is already resolving an error
+	private boolean mResolvingError = false;
+
+	private GoogleApiClient mGoogleApiClient;
+
+	public GoogleApiClient getApiClient() {
+		return mGoogleApiClient;
+	}
+
+	@Override
+	public void onConnectionFailed(ConnectionResult result) {
+		Log.e("Game Service", "Not connected " + result.getErrorCode());
+
+		if (mResolvingError) {
+			// Already attempting to resolve an error.
+			return;
+		} else if (result.hasResolution()) {
+			try {
+				mResolvingError = true;
+				result.startResolutionForResult(this, REQUEST_RESOLVE_ERROR);
+			} catch (SendIntentException e) {
+				// There was an error with the resolution intent. Try again.
+				mGoogleApiClient.connect();
+			}
+		} else {
+			// Show dialog using GooglePlayServicesUtil.getErrorDialog()
+			// showErrorDialog(result.getErrorCode());
+
+			mResolvingError = true;
+		}
+	}
+
+	@Override
+	public void onConnected(Bundle connectionHint) {
+		// Toast.makeText(this, "Connected", Toast.LENGTH_LONG);
+	}
+
+	@Override
+	public void onConnectionSuspended(int cause) {
+		// TODO Stub di metodo generato automaticamente
+
+	}
+
+	@Override
+	public void onResume() {
+		super.onResume();
+		mGoogleApiClient.connect();
+	}
+
+	@Override
+	protected void onPause() {
+		mGoogleApiClient.disconnect();
+		super.onPause();
+	}
+
+	@Override
+	public void onStart() {
+		super.onStart();
+		if (!mResolvingError) {
+			mGoogleApiClient.connect();
+		}
+	}
+
+	@Override
+	protected void onStop() {
+		mGoogleApiClient.disconnect();
+		super.onStop();
+	}
 
 	@Override
 	protected int getLayoutID() {
@@ -37,6 +115,12 @@ public class PlantsVsBugs extends AdGameActivity {
 	protected void onCreate(final Bundle pSavedInstanceState) {
 		super.onCreate(pSavedInstanceState);
 
+		// create an instance of Google API client and specify the Play services
+		// and scopes to use. In this example, we specify that the app wants
+		// access to the Games, Plus, and Cloud Save services and scopes.
+		mGoogleApiClient = new GoogleApiClient.Builder(this).addApi(Games.API)
+				.addScope(Games.SCOPE_GAMES).addConnectionCallbacks(this)
+				.addOnConnectionFailedListener(this).build();
 	}
 
 	// Invoke displayInterstitial() when you are ready to display an
@@ -65,23 +149,6 @@ public class PlantsVsBugs extends AdGameActivity {
 		 * 
 		 * }
 		 */
-
-		// Create the interstitial.
-		interstitial = new InterstitialAd(this);
-		interstitial.setAdUnitId(getResources().getString(
-				R.string.ad_unit_id_inter));
-
-		// Create ad request.
-		AdRequest adRequest = new AdRequest.Builder().build();
-
-		// Begin loading your interstitial.
-		interstitial.loadAd(adRequest);
-
-		interstitial.setAdListener(new AdListener() {
-			public void onAdLoaded() {
-				displayInterstitial();
-			}
-		});
 
 		// classic ads
 		mAdView = new AdView(this);
@@ -112,6 +179,29 @@ public class PlantsVsBugs extends AdGameActivity {
 					@Override
 					public void onTimePassed(final TimerHandler pTimerHandler) {
 						AdEnviroment.getInstance().setScene(new MainMenu());
+
+						runOnUiThread(new Runnable() {
+							public void run() {
+								// Create the interstitial.
+								interstitial = new InterstitialAd(
+										PlantsVsBugs.this);
+								interstitial.setAdUnitId(getResources()
+										.getString(R.string.ad_unit_id_inter));
+
+								// Create ad request.
+								AdRequest adRequest = new AdRequest.Builder()
+										.build();
+
+								// Begin loading your interstitial.
+								interstitial.loadAd(adRequest);
+
+								interstitial.setAdListener(new AdListener() {
+									public void onAdLoaded() {
+										displayInterstitial();
+									}
+								});
+							}
+						});
 					}
 				}));
 		return splashScene;
